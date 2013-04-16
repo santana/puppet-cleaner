@@ -1,0 +1,8 @@
+0.1.0 2013-04-16
+-----------------
+Features:
+  * run puppet-clean -h to see the list of available formatters
+
+Caveats:
+  * comments are assumed to occur alone in a line
+  * monkey patches puppet 2.7.11; it hasn't been tested on any other version

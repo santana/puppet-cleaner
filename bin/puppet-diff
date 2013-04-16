@@ -1,0 +1,49 @@
+#!/usr/bin/ruby
+
+require 'puppet-cleaner/inspect'
+
+def usage
+  warn <<-EOS
+Usage:
+    #{File.basename $0} [-h] [-w] old.pp new.pp
+
+Options:
+    -h, --help        this help message
+    -w, --write       write a YAML file for each pp file if they are different
+  EOS
+  exit 1
+end
+
+opts = GetoptLong.new(
+  [ '--help', '-h', GetoptLong::NO_ARGUMENT ],
+  [ '--write', '-w', GetoptLong::NO_ARGUMENT ]
+)
+
+writedown = false
+
+opts.each do |opt, arg|
+  case opt
+  when '--help'
+    usage
+  when '--write'
+    writedown = true
+  end
+end
+
+usage if ARGV.size != 2
+
+filenames = ARGV
+
+old, new = filenames.collect do |filename|
+  catalog = Puppet::Cleaner.inspect(filename)
+  catalog.to_yaml.gsub(/^.*(?:file(?:_index)?|line):.*$/, "")
+end
+
+if old != new
+  puts "#{filenames[0]} and #{filenames[1]} differ"
+
+  if writedown
+    File.open("#{filenames[0]}.yaml", "w") {|f| f.write old }
+    File.open("#{filenames[1]}.yaml", "w") {|f| f.write new }
+  end
+end

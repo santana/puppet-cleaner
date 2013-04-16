@@ -1,0 +1,101 @@
+#!/usr/bin/ruby
+
+require 'getoptlong'
+require 'puppet-cleaner'
+
+def usage
+  warn <<-EOS
+Usage:
+
+    #{File.basename($0)} [-h] [-t n] [-abedlmovw ] file.pp [file2.pp...]
+
+Options:
+    -h, --help              this help message
+    -d, --debug             prints tokens before and after the transformation
+
+    -a, --alignfarrow       aligns fat arrow (=>)
+    -b, --quotedbooleans    removes unneeded quotes around boolean literals
+    -e, --ensurefirst       moves 'ensure' parameter to the top
+    -l, --link              uses ensure => link and target for symbolic links
+    -m, --mlcomments        converts /* */ style comments into #
+    -o, --octalmode         uses a 4 digit string for file modes
+    -t n, --softtabs n      indents by n spaces
+    -v, --quotedvariables   removes unneeded quotes around variables
+    -w, --trailingws        removes trailing white space
+  EOS
+  exit 1
+end
+
+opts = GetoptLong.new(
+  [ '--help', '-h', GetoptLong::NO_ARGUMENT ],
+  [ '--debug', '-d', GetoptLong::NO_ARGUMENT ],
+
+  [ '--alignfarrow', '-a', GetoptLong::NO_ARGUMENT ],
+  [ '--quotedbooleans', '-b', GetoptLong::NO_ARGUMENT ],
+  [ '--ensurefirst', '-e', GetoptLong::NO_ARGUMENT ],
+  [ '--link', '-l', GetoptLong::NO_ARGUMENT ],
+  [ '--mlcomments', '-m', GetoptLong::NO_ARGUMENT ],
+  [ '--octalmode', '-o', GetoptLong::NO_ARGUMENT ],
+  [ '--softtabs', '-t', GetoptLong::REQUIRED_ARGUMENT ],
+  [ '--quotedvariables', '-v', GetoptLong::NO_ARGUMENT ],
+  [ '--trailingws', '-w', GetoptLong::NO_ARGUMENT ]
+)
+
+debug = false
+workers = []
+
+opts.each do |opt, arg|
+  case opt
+  when '--help'
+    usage
+  when '--debug'
+    debug = true
+  when '--alignfarrow'
+    workers << Puppet::Cleaner::AlignFarrow.new
+  when '--quotedbooleans'
+    workers << Puppet::Cleaner::QuotedBooleans.new
+  when '--ensurefirst'
+    workers << Puppet::Cleaner::EnsureFirst.new
+  when '--link'
+    workers << Puppet::Cleaner::Symlink.new
+  when '--mlcomments'
+    workers << Puppet::Cleaner::MultilineComments.new
+  when '--octalmode'
+    workers << Puppet::Cleaner::OctalMode.new
+  when '--softtabs'
+    tabstop = arg.to_i <= 2 ? 2 : arg.to_i
+    workers << Puppet::Cleaner::SoftTabs.new(tabstop)
+  when '--quotedvariables'
+    workers << Puppet::Cleaner::UnneededQuotes.new
+  when '--trailingws'
+    workers << Puppet::Cleaner::TrailingWhitespace.new
+    workers << Puppet::Cleaner::TrailingWhitespaceInComments.new
+  end
+end
+
+usage if ARGV.size < 1
+
+ALL = [
+  Puppet::Cleaner::MultilineComments.new,
+  Puppet::Cleaner::SoftTabs.new,
+  Puppet::Cleaner::UnneededQuotes.new,
+  Puppet::Cleaner::TrailingWhitespace.new,
+  Puppet::Cleaner::TrailingWhitespaceInComments.new,
+  Puppet::Cleaner::AlignFarrow.new,
+  Puppet::Cleaner::OctalMode.new,
+  Puppet::Cleaner::EnsureFirst.new,
+  Puppet::Cleaner::QuotedBooleans.new,
+  Puppet::Cleaner::Symlink.new
+]
+
+
+workers = ALL if workers.empty?
+
+ARGV.each do |filename|
+  line = Puppet::Cleaner.open(filename)
+  line.hire(workers)
+  puts line.inspect if debug
+  line.transform!
+  line.show
+  puts line.inspect if debug
+end

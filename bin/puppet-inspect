@@ -1,0 +1,17 @@
+#!/usr/bin/ruby
+
+require 'puppet-cleaner/inspect'
+
+def usage
+  warn <<-EOS
+Usage:
+    #{File.basename $0} file.pp
+  EOS
+  exit 1
+end
+
+usage if ARGV.size != 1
+
+filename = ARGV[0]
+catalog = Puppet::Cleaner.inspect(filename)
+catalog.each {|e| puts e.to_yaml }
