@@ -3,6 +3,10 @@ Puppet Cleaner
 
 Puppet DSL source code cleaner and helper utilities
 
+Motivation
+----------
+http://santanatechnotes.blogspot.mx/2013/04/puppet-cleaner-010-released.html
+
 Requirements
 ------------
 
