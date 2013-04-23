@@ -125,6 +125,17 @@ module Puppet::Cleaner
     end
   end
 
+  class Name < Part
+    def show(context)
+      # fixes unquoted resource title WARNING
+      if context[:after].name == :COLON
+        print has_special_escape_sequences? ? "\"#{dqescape}\"" : "'#{sqescape}'"
+      else
+        super
+      end
+    end
+  end
+
   class Class < Part; end
 
   class Regex < Part
