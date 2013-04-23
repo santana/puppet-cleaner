@@ -1,5 +1,6 @@
 require 'puppet/parser'
 require 'puppet-cleaner/line'
+require 'puppet-cleaner/workers/worker'
 require 'puppet-cleaner/workers'
 
 class Puppet::Parser::Lexer
