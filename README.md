@@ -20,8 +20,27 @@ Utilities
 ### puppet-clean
 
 Receives a puppet manifest file as input and outputs the result of
-applying a set of transformation rules that makes it comply with
-a subset of the current puppet style guide.
+applying the set of transformation rules that you select. If no options
+are selected all of them are applied, which currently is a subset of the
+puppet style guide.
+
+    Usage:
+    
+        puppet-clean [-h] [-t n] [-abedlmovw ] file.pp [file2.pp...]
+    
+    Options:
+        -h, --help              this help message
+        -d, --debug             prints tokens before and after the transformation
+    
+        -a, --alignfarrow       aligns fat arrow (=>)
+        -b, --quotedbooleans    removes unneeded quotes around boolean literals
+        -e, --ensurefirst       moves 'ensure' parameter to the top
+        -l, --link              uses ensure => link and target for symbolic links
+        -m, --mlcomments        converts /* */ style comments into #
+        -o, --octalmode         uses a 4 digit string for file modes
+        -t n, --softtabs n      indents by n spaces
+        -v, --quotedvariables   removes unneeded quotes around variables
+        -w, --trailingws        removes trailing white space
 
 ### puppet-diff
 
