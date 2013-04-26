@@ -1,3 +1,8 @@
+0.1.1 2013-04-26
+-----------------
+Bug fix:
+	* uninitialized constant Puppet::Cleaner::Worker (NameError) runtime error fixed
+
 0.1.0 2013-04-16
 -----------------
 Features:

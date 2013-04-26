@@ -1,5 +1,5 @@
 PKG_NAME = 'puppet-cleaner'
-PKG_VERSION = '0.1.0'
+PKG_VERSION = '0.1.1'
 PKG_FILES = Dir["lib/*.rb"] + Dir["lib/puppet-cleaner/*.rb"] +
             Dir["lib/puppet-cleaner/workers/*.rb"] +
             %w{COPYRIGHT Changelog README.md}
