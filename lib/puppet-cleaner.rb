@@ -1,4 +1,4 @@
-require 'puppet/parser'
+require 'puppet'
 require 'puppet-cleaner/line'
 require 'puppet-cleaner/workers'
 
