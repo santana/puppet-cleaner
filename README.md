@@ -12,8 +12,6 @@ Requirements
 
   * puppet
 
-it has been tested with puppet 2.7.11 only
-
 Utilities
 ------------
 
