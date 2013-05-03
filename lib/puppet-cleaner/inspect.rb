@@ -1,4 +1,4 @@
-require 'puppet/parser'
+require 'puppet'
 
 module Puppet::Cleaner
   def self.inspect(filename)
