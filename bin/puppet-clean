@@ -19,6 +19,7 @@ Options:
     -l, --link              uses ensure => link and target for symbolic links
     -m, --mlcomments        converts /* */ style comments into #
     -o, --octalmode         uses a 4 digit string for file modes
+    -r, --resourcetitles    quotes resource titles
     -t n, --softtabs n      indents by n spaces
     -v, --quotedvariables   removes unneeded quotes around variables
     -w, --trailingws        removes trailing white space
@@ -36,6 +37,7 @@ opts = GetoptLong.new(
   [ '--link', '-l', GetoptLong::NO_ARGUMENT ],
   [ '--mlcomments', '-m', GetoptLong::NO_ARGUMENT ],
   [ '--octalmode', '-o', GetoptLong::NO_ARGUMENT ],
+  [ '--resourcetitles', '-r', GetoptLong::NO_ARGUMENT ],
   [ '--softtabs', '-t', GetoptLong::REQUIRED_ARGUMENT ],
   [ '--quotedvariables', '-v', GetoptLong::NO_ARGUMENT ],
   [ '--trailingws', '-w', GetoptLong::NO_ARGUMENT ]
@@ -62,6 +64,8 @@ opts.each do |opt, arg|
     workers << Puppet::Cleaner::MultilineComments.new
   when '--octalmode'
     workers << Puppet::Cleaner::OctalMode.new
+  when '--resourcetitles'
+    workers << Puppet::Cleaner::ResourceTitles.new
   when '--softtabs'
     tabstop = arg.to_i <= 2 ? 2 : arg.to_i
     workers << Puppet::Cleaner::SoftTabs.new(tabstop)
@@ -83,6 +87,7 @@ ALL = [
   Puppet::Cleaner::TrailingWhitespaceInComments.new,
   Puppet::Cleaner::AlignFarrow.new,
   Puppet::Cleaner::OctalMode.new,
+  Puppet::Cleaner::ResourceTitles.new,
   Puppet::Cleaner::EnsureFirst.new,
   Puppet::Cleaner::QuotedBooleans.new,
   Puppet::Cleaner::Symlink.new
