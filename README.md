@@ -12,6 +12,11 @@ Requirements
 
   * puppet
 
+Installation
+------------
+
+    sudo gem install puppet-cleaner
+
 Utilities
 ------------
 
@@ -67,6 +72,6 @@ classes and nodes) to YAML.
         puppet-inspect file.pp
 
 Help & Feedback
-------------
+---------------
 
 Mail me directly if you need help or have any feedback about it.
