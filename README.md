@@ -39,15 +39,15 @@ and are not optional.
         -h, --help              this help message
         -d, --debug             prints tokens before and after the transformation
     
-        -a, --alignfarrow       aligns fat arrow (=>)
+        -a, --alignfarrow       aligns fat arrows (`=>`)
         -b, --quotedbooleans    removes unneeded quotes around boolean literals
-        -e, --ensurefirst       moves 'ensure' parameter to the top
-        -l, --link              uses ensure => link and target for symbolic links
-        -m, --mlcomments        converts /* */ style comments into #
-        -o, --octalmode         uses a 4 digit string for file modes
+        -e, --ensurefirst       moves `ensure` attribute to the top
+        -l, --link              declares symbolic links by using `ensure => link` and `target` attributes
+        -m, --mlcomments        converts /* */ style comments to #
+        -o, --octalmode         represents file modes as a 4 digits string
         -r, --resourcetitles    quotes resource titles
         -t n, --softtabs n      indents by n spaces
-        -v, --quotedvariables   removes unneeded quotes around variables
+        -v, --quotedvariables   emoves unneeded quotes around variables
         -w, --trailingws        removes trailing white space
 
 ### puppet-diff
