@@ -47,7 +47,7 @@ and are not optional.
         -o, --octalmode         represents file modes as a 4 digits string
         -r, --resourcetitles    quotes resource titles
         -t n, --softtabs n      indents by n spaces
-        -v, --quotedvariables   emoves unneeded quotes around variables
+        -v, --quotedvariables   removes unneeded quotes around variables
         -w, --trailingws        removes trailing white space
 
 ### puppet-diff
