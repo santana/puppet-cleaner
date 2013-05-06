@@ -27,7 +27,7 @@ applying the set of transformation rules that you select. If no options
 are selected all of them are applied, which currently is a subset of the
 puppet style guide.
 
-**Note:** the use of ${} for variable interpolation in strings and the
+**Note:** the use of `${}` for variable interpolation in strings and the
 replacement of double with single quotes when possible are done by default
 and are not optional.
 
@@ -74,4 +74,4 @@ classes and nodes) to YAML.
 Help & Feedback
 ---------------
 
-Mail me directly if you need help or have any feedback about it.
+You can mail me directly if you need help or have any feedback to share.
