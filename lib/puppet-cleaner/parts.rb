@@ -91,7 +91,7 @@ module Puppet::Cleaner
 
   class Comment < Part
     def to_s
-      value.empty? ? "#" : "# #{value}"
+      value.empty? || value[0..0] == "#" ? "##{value}" : "# #{value}"
     end
   end
 
