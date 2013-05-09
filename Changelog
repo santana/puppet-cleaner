@@ -1,22 +1,30 @@
+0.3.1 2013-05-09
+-----------------
+Bug fixes:
+  * file resources were incorrectly transformed when a selector was used
+    for ensure attributes
+
+  * comments starting with '##' were transformed to '# #'
+
 0.3.0 2013-05-05
 -----------------
 Features:
-	* New worker for quoting resource titles (-r option)
+  * New worker for quoting resource titles (-r option)
 
 0.2.1 2013-05-03
 -----------------
 Bug fix:
-	* puppet-diff and puppet-inspect were not updated with puppet 3 support
+  * puppet-diff and puppet-inspect were not updated with puppet 3 support
 
 0.2.0 2013-04-29
 -----------------
 Features:
-	* puppet 3 support
+  * puppet 3 support
 
 0.1.1 2013-04-26
 -----------------
 Bug fix:
-	* uninitialized constant Puppet::Cleaner::Worker (NameError) runtime error fixed
+  * uninitialized constant Puppet::Cleaner::Worker (NameError) runtime error fixed
 
 0.1.0 2013-04-16
 -----------------
