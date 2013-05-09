@@ -11,9 +11,12 @@ module Puppet::Cleaner
       return if pos >= line.parts.size || line.parts[pos].name != :LBRACE
   
       foreach_colon(line) {|colonpos|
-        start, pos = get_param(line, 'ensure', colonpos)
+        start, endpos = get_param(line, 'ensure', colonpos)
         next if start.nil?
-        pos -= 1 if line.parts[pos].name == :COMMA
+        pos = start + 1
+        pos += 1 while pos < line.parts.size && line.parts[pos].name != :FARROW
+        pos += 1
+        pos += 1 while pos < line.parts.size && [:BLANK, :RETURN, :COMMENT, :MLCOMMENT].include?(line.parts[pos].name)
         value = line.parts[pos].value
         next if [:NAME, :STRING].include?(line.parts[pos].name) && %w(present absent file directory link symlink).include?(value)
         next if line.parts[pos].name == :VARIABLE
